@@ -42,8 +42,8 @@ function TMyQuery.Select(Tabelas, Colunas, Condicoes: String): TFDQuery;
 var
   QR: TFDQuery;
 begin
+  QR:= EstruturaSQL('SELECT '+Colunas+ ' FROM ' + Tabelas + ' ' + Condicoes);
   try
-    QR:= EstruturaSQL('SELECT '+Colunas+ ' FROM ' + Tabelas + ' ' + Condicoes);
     QR.Open;
   finally
     Result:= QR;
@@ -54,8 +54,8 @@ function TMyQuery.Update(Tabela, Alteracoes, Condicao: String): Boolean;
 var
   QR: TFDQuery;
 begin
+  QR:= EstruturaSQL('UPDATE '+Tabela+' SET '+Alteracoes+ ' ' + Condicao +'');
   try
-    QR:= EstruturaSQL('UPDATE '+Tabela+' SET '+Alteracoes+ ' ' + Condicao +'');
     Result:= True;
     QR.ExecSQL;
     QR.Free;
@@ -79,8 +79,8 @@ function TMyQuery.Existente(Colunas, Tabelas, Condicoes: String): Boolean;
 var
   QR: TFDQuery;
 begin
+  QR:= Select(Tabelas, Colunas, Condicoes);
   try
-    QR:= Select(Tabelas, Colunas, Condicoes);
     result:= not QR.IsEmpty;
   finally
     QR.Free;
@@ -91,8 +91,8 @@ function TMyQuery.UltimoID(Tabela, Campo: String): Integer;
 var
   QR: TFDQuery;
 begin
+  QR:= Select(Tabela, Campo, 'ORDER BY '+Campo+' DESC');
   try
-    QR:= Select(Tabela, Campo, 'ORDER BY '+Campo+' DESC');
     result:= QR.FieldByName(Campo).AsInteger;
   finally
     QR.Free;
